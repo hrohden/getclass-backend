@@ -3,6 +3,9 @@ import { v4 as uuidv4 } from "uuid";
 
 const app = express();
 
+// Middleware to parse the body of the request
+app.use(express.json());
+
 const moments = [
   {
     id: uuidv4(),
@@ -24,6 +27,13 @@ const moments = [
 
 app.get("/moments", (req, res) => {
   res.send(moments);
+});
+
+// POST method to create a new moment
+app.post("/moments", (req, res) => {
+  const moment = { ...req.body, id: uuidv4() }
+  moments.push(moment);
+  res.send(moment);
 });
 
 app.listen(3000, () => {
