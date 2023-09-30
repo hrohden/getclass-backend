@@ -25,6 +25,7 @@ const moments = [
   },
 ];
 
+// GET method to get all the moments
 app.get("/moments", (req, res) => {
   res.send(moments);
 });
@@ -36,6 +37,7 @@ app.post("/moments", (req, res) => {
   res.send(moment);
 });
 
+// Listen to the port 3000
 app.listen(3000, () => {
   console.log("Server listening on port 3000");
 });
