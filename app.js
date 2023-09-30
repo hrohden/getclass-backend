@@ -37,6 +37,16 @@ app.post("/moments", (req, res) => {
   res.send(moment);
 });
 
+// DELETE method to delete a moment
+app.delete("/moments/:id", (req, res) => {
+  const { id } = req.params;
+  const index = moments.findIndex((moment) => moment.id === id);
+  if (index > -1) {
+    moments.splice(index, 1);
+  }
+  res.send(id);
+});
+
 // Listen to the port 3000
 app.listen(3000, () => {
   console.log("Server listening on port 3000");
