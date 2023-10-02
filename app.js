@@ -37,6 +37,16 @@ app.post("/moments", (req, res) => {
   res.send(moment);
 });
 
+// PUT method to update a moment
+app.put("/moments/:id", (req, res) => {
+  const { id } = req.params;
+  const index = moments.findIndex((moment) => moment.id === id);
+  if (index > -1) {
+    moments[index] = { ...req.body, id };
+  }
+  res.send(moments[index]);
+});
+
 // DELETE method to delete a moment
 app.delete("/moments/:id", (req, res) => {
   const { id } = req.params;
