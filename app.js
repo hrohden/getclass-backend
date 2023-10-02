@@ -30,9 +30,19 @@ app.get("/moments", (req, res) => {
   res.send(moments);
 });
 
+// GET method to get moment by id
+app.get("/moments/:id", (req, res) => {
+  const moment = moments.find((m) => m.id === req.params.id);
+  if (!!moment) {
+    res.send(moment);
+  } else {
+    res.status(404).send("Moment not found");
+  }
+});
+
 // POST method to create a new moment
 app.post("/moments", (req, res) => {
-  const moment = { ...req.body, id: uuidv4() }
+  const moment = { ...req.body, id: uuidv4() };
   moments.push(moment);
   res.send(moment);
 });
