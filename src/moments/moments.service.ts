@@ -4,7 +4,7 @@ import { v4 as uuidv4 } from 'uuid';
 
 @Injectable()
 export class MomentsService {
-  moments = [
+  moments: Moment[] = [
     {
       id: uuidv4(),
       title: '(🖥️) Trip to NYC',
@@ -32,5 +32,52 @@ export class MomentsService {
    */
   getMomentById(id: string): Moment {
     return this.moments.find((moment) => moment.id === id);
+  }
+
+  /**
+   * Create a new moment
+   */
+  createMoment(moment: Moment): Moment {
+    const newMoment: Moment = {
+      id: uuidv4(),
+      ...moment,
+    };
+    this.moments.push(newMoment);
+    return newMoment;
+  }
+
+  /**
+   * Update a moment
+   * @param id
+   * @param moment
+   * @returns updated moment
+   * @throws Error if moment not found
+   */
+  updateMoment(id: string, moment: Moment): Moment {
+    const momentIndex = this.moments.findIndex((moment) => moment.id === id);
+    if (momentIndex < 0) {
+      throw new Error('Moment not found');
+    }
+    this.moments[momentIndex] = {
+      id,
+      ...moment,
+    };
+    return this.moments[momentIndex];
+  }
+
+  /**
+   * Delete a moment
+   * @param id
+   * @returns deleted moment
+   * @throws Error if moment not found
+   */
+  deleteMoment(id: string): Moment {
+    const momentIndex = this.moments.findIndex((moment) => moment.id === id);
+    if (momentIndex < 0) {
+      throw new Error('Moment not found');
+    }
+    const deletedMoment = this.moments[momentIndex];
+    this.moments.splice(momentIndex, 1);
+    return deletedMoment;
   }
 }
