@@ -1,10 +1,14 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { JwtService } from '@nestjs/jwt';
 import { UsersService } from 'src/users/users.service';
 import { Authentication } from './entities/authentication.entity';
 
 @Injectable()
 export class AuthenticationService {
-  constructor(private usersService: UsersService) {}
+  constructor(
+    private usersService: UsersService,
+    private jwtService: JwtService,
+  ) {}
   async signIn(authentication: Authentication) {
     const user = await this.usersService.findOne(authentication.username);
 
@@ -12,10 +16,10 @@ export class AuthenticationService {
       throw new UnauthorizedException('Invalid credentials');
     }
 
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const { password, ...result } = user;
-    // TODO: return JWT here instead of user
+    const payload = { sub: user.id, username: user.username };
 
-    return result;
+    return {
+      access_token: await this.jwtService.signAsync(payload),
+    };
   }
 }
