@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+import { Prisma } from '@prisma/client';
 import { PrismaService } from 'src/prisma.service';
 import { v4 as uuidv4 } from 'uuid';
 import { Moment } from './entities/moment.entity';
@@ -15,8 +16,14 @@ export class MomentsService {
     return this.prisma.moment.create({ data });
   }
 
-  findAll() {
-    return this.prisma.moment.findMany();
+  findAll(params: {
+    skip?: number;
+    take?: number;
+    cursor?: Prisma.MomentWhereUniqueInput;
+    where?: Prisma.MomentWhereInput;
+    orderBy?: Prisma.MomentOrderByWithRelationInput;
+  }) {
+    return this.prisma.moment.findMany({ ...params });
   }
 
   findOne(id: string) {

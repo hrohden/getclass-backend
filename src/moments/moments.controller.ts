@@ -7,6 +7,7 @@ import {
   Patch,
   Post,
 } from '@nestjs/common';
+import { Prisma } from '@prisma/client';
 import { Moment } from './entities/moment.entity';
 import { MomentsService } from './moments.service';
 
@@ -20,8 +21,14 @@ export class MomentsController {
   }
 
   @Get()
-  findAll() {
-    return this.momentsService.findAll();
+  findAll(params: {
+    skip?: number;
+    take?: number;
+    cursor?: Prisma.MomentWhereUniqueInput;
+    where?: Prisma.MomentWhereInput;
+    orderBy?: Prisma.MomentOrderByWithRelationInput;
+  }) {
+    return this.momentsService.findAll(params);
   }
 
   @Get(':id')
