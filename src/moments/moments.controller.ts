@@ -4,63 +4,38 @@ import {
   Delete,
   Get,
   Param,
+  Patch,
   Post,
-  Put,
 } from '@nestjs/common';
-import { Moment } from './moment';
+import { Moment } from './entities/moment.entity';
 import { MomentsService } from './moments.service';
 
 @Controller('moments')
 export class MomentsController {
-  constructor(private momentsService: MomentsService) {}
+  constructor(private readonly momentsService: MomentsService) {}
 
-  /**
-   * Get all moments
-   * @returns all moments
-   */
-  @Get()
-  getMoments(): Moment[] {
-    return this.momentsService.getMoments();
-  }
-
-  /**
-   * Get moment by id
-   * @param id
-   * @returns moment
-   */
-  @Get(':id')
-  getMomentById(@Param('id') id: string): Moment {
-    return this.momentsService.getMomentById(id);
-  }
-
-  /**
-   * Create a new moment
-   * @param moment
-   * @returns created moment
-   */
   @Post()
-  createMoment(@Body() moment: Moment): Moment {
-    return this.momentsService.createMoment(moment);
+  create(@Body() moment: Moment) {
+    return this.momentsService.create(moment);
   }
 
-  /**
-   * Update a moment
-   * @param id
-   * @param moment
-   * @returns updated moment
-   */
-  @Put(':id')
-  updateMoment(@Param('id') id: string, @Body() moment: Moment): Moment {
-    return this.momentsService.updateMoment(id, moment);
+  @Get()
+  findAll() {
+    return this.momentsService.findAll();
   }
 
-  /**
-   * Delete a moment
-   * @param id
-   * @returns deleted moment
-   */
+  @Get(':id')
+  findOne(@Param('id') id: string) {
+    return this.momentsService.findOne(id);
+  }
+
+  @Patch(':id')
+  update(@Param('id') id: string, @Body() moment: Moment) {
+    return this.momentsService.update(id, moment);
+  }
+
   @Delete(':id')
-  deleteMoment(@Param('id') id: string): Moment {
-    return this.momentsService.deleteMoment(id);
+  remove(@Param('id') id: string) {
+    return this.momentsService.remove(id);
   }
 }

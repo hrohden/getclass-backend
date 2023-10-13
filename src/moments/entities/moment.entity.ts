@@ -1,4 +1,4 @@
-export type Moment = {
+export class Moment {
   id?: string;
   title: string;
   headline?: string;
@@ -6,4 +6,4 @@ export type Moment = {
   date?: Date;
   isFavorite: boolean;
   pictureUrl?: string;
-};
+}

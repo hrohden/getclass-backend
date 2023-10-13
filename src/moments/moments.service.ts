@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import { Moment } from 'src/moments/moment';
 import { v4 as uuidv4 } from 'uuid';
+import { Moment } from './entities/moment.entity';
 
 @Injectable()
 export class MomentsService {
@@ -23,21 +23,7 @@ export class MomentsService {
     },
   ];
 
-  getMoments(): Moment[] {
-    return this.moments;
-  }
-
-  /**
-   * Get moment by id
-   */
-  getMomentById(id: string): Moment {
-    return this.moments.find((moment) => moment.id === id);
-  }
-
-  /**
-   * Create a new moment
-   */
-  createMoment(moment: Moment): Moment {
+  create(moment: Moment) {
     const newMoment: Moment = {
       id: uuidv4(),
       ...moment,
@@ -46,14 +32,15 @@ export class MomentsService {
     return newMoment;
   }
 
-  /**
-   * Update a moment
-   * @param id
-   * @param moment
-   * @returns updated moment
-   * @throws Error if moment not found
-   */
-  updateMoment(id: string, moment: Moment): Moment {
+  findAll() {
+    return this.moments;
+  }
+
+  findOne(id: string) {
+    return this.moments.find((moment) => moment.id === id);
+  }
+
+  update(id: string, moment: Moment) {
     const momentIndex = this.moments.findIndex((moment) => moment.id === id);
     if (momentIndex < 0) {
       throw new Error('Moment not found');
@@ -65,13 +52,7 @@ export class MomentsService {
     return this.moments[momentIndex];
   }
 
-  /**
-   * Delete a moment
-   * @param id
-   * @returns deleted moment
-   * @throws Error if moment not found
-   */
-  deleteMoment(id: string): Moment {
+  remove(id: string) {
     const momentIndex = this.moments.findIndex((moment) => moment.id === id);
     if (momentIndex < 0) {
       throw new Error('Moment not found');
