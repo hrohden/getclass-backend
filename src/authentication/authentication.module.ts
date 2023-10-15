@@ -13,7 +13,9 @@ import { AuthenticationService } from './authentication.service';
       inject: [ConfigService],
       useFactory: async (configService: ConfigService) => ({
         secret: configService.get<string>('AUTH_SECRET'),
-        signOptions: { expiresIn: '60s' },
+        signOptions: {
+          expiresIn: configService.get<string>('AUTH_JWT_EXPIRATION', '1d'),
+        },
       }),
       global: true,
     }),
