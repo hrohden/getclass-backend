@@ -9,12 +9,14 @@ import {
 import { AuthenticationGuard } from './authentication.guard';
 import { AuthenticationService } from './authentication.service';
 import { Authentication } from './entities/authentication.entity';
+import { Public } from './public.decorator';
 
 @Controller('login')
 export class AuthenticationController {
   constructor(private authenticationService: AuthenticationService) {}
 
   @Post()
+  @Public()
   signIn(@Body() authentication: Authentication) {
     return this.authenticationService.signIn(authentication);
   }
