@@ -19,3 +19,9 @@ model Moment {
   isFavorite  Boolean   @default(false)
   pictureUrl  String?
 }
+
+model Identity {
+  id          String    @id @default(uuid())
+  name        String
+  password    String
+}
