@@ -7,7 +7,7 @@ export class IdentitiesService {
     {
       id: 'd55cad4c-d3b5-470f-a821-60789d503cf1',
       username: 'hrohden@gmail.com',
-      password: '1234',
+      password: '$2a$12$TZi5xw0m3ZJxADz7QEhniOyxiT4rwc.FMqoRUQHI6xt51v/3q3Yze',
     },
   ];
 
