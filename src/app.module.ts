@@ -5,6 +5,7 @@ import { AppService } from './app.service';
 import { AuthenticationModule } from './authentication/authentication.module';
 import { MomentsModule } from './moments/moments.module';
 import { UsersModule } from './users/users.module';
+import { IdentitiesModule } from './identities/identities.module';
 
 @Module({
   imports: [
@@ -14,6 +15,7 @@ import { UsersModule } from './users/users.module';
     ConfigModule.forRoot({
       isGlobal: true,
     }),
+    IdentitiesModule,
   ],
   controllers: [AppController],
   providers: [AppService],
