@@ -12,17 +12,19 @@ export class AuthenticationService {
     private jwtService: JwtService,
   ) {}
   async signIn(authentication: Authentication): Promise<AuthenticationToken> {
-    const user = await this.identitiesService.findOne(authentication.username);
+    const identity = await this.identitiesService.findOne(
+      authentication.username,
+    );
     const passwordMatches = await bcrypt.compare(
       authentication.password,
-      user.password,
+      identity.password,
     );
 
     if (!passwordMatches) {
       throw new UnauthorizedException('Invalid credentials');
     }
 
-    const payload = { sub: user.id, username: user.username };
+    const payload = { sub: identity.id, username: identity.username };
 
     return {
       accessToken: await this.jwtService.signAsync(payload),
