@@ -22,6 +22,6 @@ model Moment {
 
 model Identity {
   id          String    @id @default(uuid())
-  name        String
+  username    String
   password    String
 }
