@@ -32,7 +32,7 @@ export class AuthenticationGuard implements CanActivate {
     }
     try {
       const payload = await this.jwtService.verifyAsync(token, {
-        secret: this.configService.get<string>('AUTH_SECRET'),
+        secret: this.configService.get<string>('AUTH_JWT_SECRET_KEY'),
       });
       request['user'] = payload;
     } catch {
