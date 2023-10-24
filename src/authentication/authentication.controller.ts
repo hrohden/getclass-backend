@@ -8,7 +8,7 @@ import {
 } from '@nestjs/common';
 import { AuthenticationGuard } from './authentication.guard';
 import { AuthenticationService } from './authentication.service';
-import { Authentication } from './entities/authentication.entity';
+import { LoginForm } from './entities/loginForm.entity';
 import { Public } from './public.decorator';
 
 @Controller('login')
@@ -17,8 +17,8 @@ export class AuthenticationController {
 
   @Post()
   @Public()
-  signIn(@Body() authentication: Authentication) {
-    return this.authenticationService.signIn(authentication);
+  signIn(@Body() loginForm: LoginForm) {
+    return this.authenticationService.signIn(loginForm);
   }
 
   @UseGuards(AuthenticationGuard)

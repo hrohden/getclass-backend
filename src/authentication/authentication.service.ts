@@ -3,7 +3,7 @@ import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
 import { IdentitiesService } from 'src/identities/identities.service';
 import { Authentication } from './entities/authentication.entity';
-import { AuthenticationToken } from './entities/authenticationToken.entity';
+import { LoginForm } from './entities/loginForm.entity';
 
 @Injectable()
 export class AuthenticationService {
@@ -11,7 +11,7 @@ export class AuthenticationService {
     private identitiesService: IdentitiesService,
     private jwtService: JwtService,
   ) {}
-  async signIn(authentication: Authentication): Promise<AuthenticationToken> {
+  async signIn(authentication: LoginForm): Promise<Authentication> {
     const identity = await this.identitiesService.findOne(
       authentication.username,
     );
@@ -28,6 +28,7 @@ export class AuthenticationService {
 
     return {
       accessToken: await this.jwtService.signAsync(payload),
+      username: identity.username,
     };
   }
 }
