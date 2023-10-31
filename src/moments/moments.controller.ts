@@ -8,6 +8,7 @@ import {
   Post,
 } from '@nestjs/common';
 import { Prisma } from '@prisma/client';
+import { Public } from 'src/authentication/public.decorator';
 import { Moment } from './entities/moment.entity';
 import { MomentsService } from './moments.service';
 
@@ -16,11 +17,13 @@ export class MomentsController {
   constructor(private readonly momentsService: MomentsService) {}
 
   @Post()
+  @Public()
   create(@Body() moment: Moment) {
     return this.momentsService.create(moment);
   }
 
   @Get()
+  @Public()
   findAll(params: {
     skip?: number;
     take?: number;
@@ -32,16 +35,19 @@ export class MomentsController {
   }
 
   @Get(':id')
+  @Public()
   findOne(@Param('id') id: string) {
     return this.momentsService.findOne(id);
   }
 
   @Patch(':id')
+  @Public()
   update(@Param('id') id: string, @Body() moment: Moment) {
     return this.momentsService.update(id, moment);
   }
 
   @Delete(':id')
+  @Public()
   remove(@Param('id') id: string) {
     return this.momentsService.remove(id);
   }
